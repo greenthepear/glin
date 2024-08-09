@@ -14,11 +14,11 @@ func AddLinks(original []byte, repoLink string) []byte {
 		if len(splitString) == 1 {
 			// Byte makes this ugly, probably there's a nicer way to do this
 			addition = append(addition, []byte(
-				"("+repoLink+"#"+string(splitString[0])+")")...)
+				"("+repoLink+"#"+string(splitString[0])+")"+string(s[len(s)-1]))...)
 		} else if len(splitString) >= 2 {
 			addition = append(addition, []byte(
 				"("+repoLink+"#"+string(splitString[0])+"."+
-					string(splitString[1])+")")...)
+					string(splitString[1])+")"+string(s[len(s)-1]))...)
 		}
 		return append(s[:len(s)-1], addition...)
 	})

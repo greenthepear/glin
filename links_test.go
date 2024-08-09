@@ -17,7 +17,7 @@ func TestAddLinks(t *testing.T) {
 			"dummy [`(*test).again`] here",
 			"dummy [`(*test).again`](link#test.again) here"},
 		{
-			"dummy [`(*test).again`] here [`again`]",
+			"dummy [`(*test).again`] here [`again`] ",
 			"dummy [`(*test).again`](link#test.again) here [`again`](link#again) "},
 	}
 
