@@ -29,7 +29,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error while reading file: %v", err)
 	}
-	changed := AddLinks(text, *repoLink)
+	changed := AddLinks(string(text), *repoLink)
 	if *out == "" {
 		if !*overwrite {
 			fmt.Printf("Do you want to overwrite %s? (y/N)\n", *in)
@@ -42,7 +42,7 @@ func main() {
 				return
 			}
 		}
-		err := os.WriteFile(*in, changed, 0644)
+		err := os.WriteFile(*in, []byte(changed), 0644)
 		if err != nil {
 			log.Fatalf("Error while writing file: %v", err)
 		}
