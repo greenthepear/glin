@@ -3,12 +3,14 @@
 It scans the file for strings enclosed in ``[`...`]`` not followed by `(...)` (ones that already have the link)*, for example:
 ```md
 this: [`Cell`]
-becomes: [`Cell`](github.com/greenthepear/egriden#Cell)
+becomes:
+[`Cell`](https://pkg.go.dev/github.com/greenthepear/egriden#Cell)
 
 this: [`(*GridLayer).CellAtScreenPos`]
-becomes: [`(*GridLayer).CellAtScreenPos`](github.com/greenthepear/egriden#GridLayer.CellAtScreenPos)
+becomes:
+[`(*GridLayer).CellAtScreenPos`](https://pkg.go.dev/github.com/greenthepear/egriden#GridLayer.CellAtScreenPos)
 
-this: [`Cell.Anchor`](github.com/greenthepear/egriden#Cell.Anchor)
+this: [`Cell.Anchor`](https://pkg.go.dev/github.com/greenthepear/egriden#Cell.Anchor)
 doesn't change, because a link is already there
 ```
 

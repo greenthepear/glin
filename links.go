@@ -15,10 +15,10 @@ func AddLinks(original string, repoLink string) string {
 		addition := ""
 		if len(splitString) == 1 {
 			addition =
-				"(" + repoLink + "#" + string(splitString[0]) + ")" + string(s[len(s)-1])
+				"(https://pkg.go.dev/" + repoLink + "#" + string(splitString[0]) + ")" + string(s[len(s)-1])
 		} else if len(splitString) >= 2 {
 			addition =
-				"(" + repoLink + "#" + string(splitString[0]) + "." +
+				"(https://pkg.go.dev/" + repoLink + "#" + string(splitString[0]) + "." +
 					string(splitString[1]) + ")" + string(s[len(s)-1])
 		}
 		return s[:len(s)-1] + addition
