@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"io"
@@ -14,27 +15,40 @@ func fatalErrorCheck(err error, whileDoingWhat string) {
 	}
 }
 
+func getRepoFromGoMod() (string, error) {
+	full, err := os.ReadFile("go.mod")
+	if err != nil {
+		return "", err
+	}
+	full = bytes.SplitN(full, []byte("\n"), 2)[0]
+	return string(bytes.SplitN(full, []byte(" "), 3)[1]), nil
+}
+
 func main() {
 	in := flag.String(
 		"in", "",
 		"input file, default will scan from stdin")
 	repoLink := flag.String(
 		"repo", "",
-		"link to the repository: e.g github.com/exampleguy/example")
+		"link to the repository: e.g github.com/exampleguy/example. default will try to get the name from go.mod in the working directory")
 	out := flag.String(
 		"out", "",
-		"output file, not setting it or -ow will just print the new text to stdout")
+		"output file, default or -ow will just print the new text to stdout")
 	overwrite := flag.Bool(
 		"ow", false,
 		"overwrtie the original file, will ignore -out")
 	flag.Parse()
 
+	var err error
 	if *repoLink == "" {
-		log.Fatalf("No repo link provided, add flag like:\n\tglin -repo \"github.com/greenthepear/glin\"")
+		gomodRepo, err := getRepoFromGoMod()
+		if err != nil || gomodRepo == "" {
+			log.Fatalf("No repo link provided or found in go.mod, add flag like:\n\tglin -repo \"github.com/greenthepear/glin\"")
+		}
+		repoLink = &gomodRepo
 	}
 
 	var text []byte
-	var err error
 	if *in == "" {
 		text, err = io.ReadAll(os.Stdin)
 		fatalErrorCheck(err, "reading from stdin")
