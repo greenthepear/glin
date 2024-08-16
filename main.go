@@ -27,23 +27,23 @@ func getRepoFromGoMod() (string, error) {
 func main() {
 	in := flag.String(
 		"in", "",
-		"input file, default will scan from stdin")
+		"input file, omitting will scan from stdin")
 	repoLink := flag.String(
 		"repo", "",
-		"link to the repository: e.g github.com/exampleguy/example. default will try to get the name from go.mod in the working directory")
+		"path to the repository, e.g. github.com/exampleguy/example\nomitting will try to get the path from go.mod in the working directory")
 	out := flag.String(
 		"out", "",
-		"output file, default or -ow will just print the new text to stdout")
+		"output file, omitting will print the new text to stdout")
 	overwrite := flag.Bool(
 		"ow", false,
-		"overwrtie the original file, will ignore -out")
+		"overwrite the original file, will ignore -out")
 	flag.Parse()
 
 	var err error
 	if *repoLink == "" {
 		gomodRepo, err := getRepoFromGoMod()
 		if err != nil || gomodRepo == "" {
-			log.Fatalf("No repo link provided or found in go.mod, add flag like:\n\tglin -repo \"github.com/greenthepear/glin\"")
+			log.Fatalf("No repo path provided or found in go.mod, add flag like:\n\tglin -repo \"github.com/greenthepear/glin\"\nError while opening go.mod (if any): %v", err)
 		}
 		repoLink = &gomodRepo
 	}
