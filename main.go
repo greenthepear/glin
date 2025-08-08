@@ -20,6 +20,7 @@ func getRepoFromGoMod() (string, error) {
 	if err != nil {
 		return "", err
 	}
+	// TODO: Might as well use regex here too
 	full = bytes.SplitN(full, []byte("\n"), 2)[0]
 	return string(bytes.SplitN(full, []byte(" "), 3)[1]), nil
 }
@@ -37,6 +38,7 @@ func main() {
 	overwrite := flag.Bool(
 		"ow", false,
 		"overwrite the original file, will ignore -out")
+	// TODO: Add version flag
 	flag.Parse()
 
 	var err error
@@ -68,7 +70,5 @@ func main() {
 		return
 	}
 	err = os.WriteFile(*out, []byte(changed), 0644)
-	if err != nil {
-		fatalErrorCheck(err, "writing to file")
-	}
+	fatalErrorCheck(err, "writing to file")
 }
